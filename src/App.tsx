@@ -1,26 +1,47 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Hello from "./Hello";
+import LightBub from "./LightBub";
+import ToggleButton from "./ToggleButton";
+
+
+declare module "react" {
+  /**
+   * State hook. Returns a stateful value, and a function to update it.
+   */
+  export function useState<TValue>(
+    initialState: TValue
+  ): [TValue, (value: TValue) => void];
+
+  /**
+   * Accepts a function that contains imperative, possibly effectful code.
+   */
+  export function useEffect(didUpdate: () => void | (() => void)): void;
 }
 
-export default App;
+const styles: React.CSSProperties = {
+  fontFamily: "sans-serif",
+  textAlign: "center"
+};
+
+const App = () => {
+  const [count, setCount] = React.useState(0);
+ 
+  console.log(count)
+
+  return (
+    <div style={styles}>
+      <Hello name="Presentation" />
+      <h2>React Typescript - Hook {"\u2728"}</h2>
+      <h3>
+        Count: {count}{" "}
+        <button onClick={() => setCount(count - 1)}>-1</button>
+        <button onClick={() => setCount(count + 1)}>+1</button>
+      </h3>
+      <ToggleButton/>
+      <LightBub/>
+    </div>
+  );
+};
+
+export default App
